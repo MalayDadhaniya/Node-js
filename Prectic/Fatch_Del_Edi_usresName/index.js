@@ -1,14 +1,18 @@
 const express = require("express");
+const fs = require("fs");
 const users = require("./MOCK_DATA.json");
 
 app = express();
+
+// Middlware
+app.use(express.urlencoded({ extended: false }));
 
 app
   .route("/api/users/:id")
   .get((req, res) => {
     const id = Number(req.params.id);
-    const output = users.find((user) => user.id === id);
-    return res.json(output);
+    const user = users.find((user) => user.id === id);
+    return res.json({ user });
   })
   .patch((req, res) => {
     return res.json({ status: "panding" });
@@ -18,7 +22,11 @@ app
   });
 
 app.post("/api/users", (req, res) => {
-  return res.json({ status: "panding" });
+  const body = req.body;
+  users.push({ ...body, id: users.length + 1 });
+  fs.writeFile("./MOCK_DATA.json", JSON.stringify(users), (err, data) => {
+    return res.json({ status: "panding" });
+  });
 });
 
 app.listen(8080, () => console.log("Server Started!"));
