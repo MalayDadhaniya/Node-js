@@ -1,0 +1,11 @@
+{
+  "name": "02filehandaling",
+  "version": "1.0.0",
+  "main": "Index.js",
+  "scripts": {
+    "start": "node Index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
