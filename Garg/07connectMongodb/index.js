@@ -1,19 +1,19 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
-// Connection..
+const app = express();
+
 mongoose
   .connect("mongodb://127.0.0.1:27017/try")
-  .then(() => console.log("MongoDB Connected"))
-  .catch((err) => console.log("MongoDB ERROR : ", err));
+  .then(() => console.log("mongodb Connected"))
+  .catch((err) => console.log("mongo Error : ", err));
 
-// Schema..
-const userSchema = mongoose.Schema({
-  firstName: {
+const userSchema = new mongoose.Schema({
+  first_name: {
     type: String,
     required: true,
   },
-  lastName: {
+  last_name: {
     type: String,
   },
   email: {
@@ -21,13 +21,15 @@ const userSchema = mongoose.Schema({
     required: true,
     unique: true,
   },
-  job_title: {
-    type: String,
-  },
   gender: {
+    type: String,
+    required: true,
+  },
+  job_title: {
     type: String,
   },
 });
 
-// Model..
-const User = mongoose.model("user", userSchema);
+const user = mongoose.model("user", userSchema);
+
+app.listen(8000, () => console.log("Server Started!"));
